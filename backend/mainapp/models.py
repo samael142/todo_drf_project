@@ -7,9 +7,12 @@ class Project(models.Model):
     http_link = models.URLField(max_length=200, blank=True)
     users = models.ManyToManyField(TodoUser)
 
+    def __str__(self):
+        return self.name
+
 
 class Todo(models.Model):
-    text = models.TextField()
+    name = models.TextField()
     user = models.ForeignKey(TodoUser, models.PROTECT)
     project = models.ForeignKey(Project, models.PROTECT)
     is_active = models.BooleanField(default=True)
