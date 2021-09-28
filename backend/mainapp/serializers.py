@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Todo, Project
 
 
-class ProjectSerializer(serializers.HyperlinkedModelSerializer):
+class ProjectSerializer(serializers.ModelSerializer):
     # users = serializers.StringRelatedField(many=True)
 
     class Meta:
@@ -10,7 +10,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
 
-class TodoSerializer(serializers.HyperlinkedModelSerializer):
+class TodoSerializer(serializers.ModelSerializer):
     # user = TodoUserSerializer()
     # project = ProjectSerializer()
 

@@ -16,5 +16,5 @@ class Todo(models.Model):
     user = models.ForeignKey(TodoUser, models.PROTECT)
     project = models.ForeignKey(Project, models.PROTECT)
     is_active = models.BooleanField(default=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.DateField(auto_now_add=True)
+    updated = models.DateField(auto_now=True)
