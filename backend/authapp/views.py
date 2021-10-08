@@ -8,6 +8,7 @@ from .serializers import TodoUserSerializer
 class TodoUserViewSet(mixins.ListModelMixin,
                       mixins.RetrieveModelMixin,
                       mixins.UpdateModelMixin,
-                      viewsets.GenericViewSet,):
+                      viewsets.GenericViewSet, ):
     queryset = TodoUser.objects.all().order_by('-pk')
     serializer_class = TodoUserSerializer
+    filterset_fields = ['username']

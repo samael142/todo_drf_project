@@ -12,6 +12,13 @@ const MenuList = () => {
                 <li className="nav-item">
                     <Link className="nav-link" to='/projects'>Projects</Link>
                 </li>
+                <li className="nav-item">
+                    {this.isAuthenticated() ?
+                        <button onClick={() => this.logout()}>Logout</button>
+                        :
+                        < Link className="nav-link" to='/login'>Login</Link>
+                    }
+                </li>
             </ul>
         </nav>
     )
