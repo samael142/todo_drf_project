@@ -63,7 +63,7 @@ class App extends React.Component {
 
     getUserNames(username) {
         const headers = this.getHeaders()
-        axios.get(`http://127.0.0.1:8000/api/users/?username=${username}`, {'headers': headers})
+        axios.get('http://127.0.0.1:8000/api/users', {'headers': headers, params:{'username': username}})
             .then(response => {
                 const username = response.data.results
                 localStorage.setItem('loggedUser', (username[0].first_name + " " + username[0].last_name))
