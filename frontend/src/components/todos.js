@@ -6,7 +6,7 @@ const TodoItem = ({todo, deleteTodo}) => {
     return (
         <tr>
             <td>{todo.name}</td>
-            <td>{todo.user}</td>
+            <td>{todo.user.first_name + ' ' + todo.user.last_name}</td>
             <td>{todo.project}</td>
             <td>{todo.created}</td>
             <td>{String(todo.is_active)}</td>
