@@ -13,8 +13,8 @@ class Project(models.Model):
 
 class Todo(models.Model):
     name = models.TextField()
-    user = models.ForeignKey(TodoUser, models.PROTECT)
-    project = models.ForeignKey(Project, models.PROTECT)
+    user = models.ForeignKey(TodoUser, models.CASCADE)
+    project = models.ForeignKey(Project, models.CASCADE)
     is_active = models.BooleanField(default=True)
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)

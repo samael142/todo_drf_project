@@ -29,6 +29,57 @@ class App extends React.Component {
         }
     }
 
+    filterProjects(filter) {
+        const headers = this.getHeaders()
+        axios.get('http://127.0.0.1:8000/api/projects', {'headers': headers, params: {'name': filter}})
+            .then(response => {
+                const projects = response.data.results
+                this.setState(
+                    {
+                        'projects': projects
+                    }
+                )
+            })
+    }
+
+    createTodo(name, user, project) {
+        const headers = this.getHeaders()
+        axios.post(`http://127.0.0.1:8000/api/todos/`, {'name': name, 'user': user, 'project': project}, {headers})
+            .then(response => {
+                this.loadData()
+            }).catch(error => console.log(error))
+    }
+
+    createProject(name, users) {
+        const headers = this.getHeaders()
+        axios.post(`http://127.0.0.1:8000/api/projects/`, {'name': name, 'users': users}, {headers})
+            .then(response => {
+                this.loadData()
+            }).catch(error => console.log(error))
+    }
+
+
+    deleteTodo(id) {
+        const headers = this.getHeaders()
+        axios.delete(`http://127.0.0.1:8000/api/todos/${id}`, {'headers': headers})
+            .then(response => {
+                let newTodoState = [...this.state.todos]
+                newTodoState.find(el => el.id === id).is_active = 'false'
+                this.setState({'todos': newTodoState})
+            }).catch(error => console.log(error))
+    }
+
+    deleteProject(id) {
+        const headers = this.getHeaders()
+        axios.delete(`http://127.0.0.1:8000/api/projects/${id}`, {'headers': headers})
+            .then(response => {
+                this.setState({
+                    'projects': this.state.projects.filter((project) => project.id !== id)
+                })
+            }).catch(error => console.log(error))
+    }
+
+
     loadData() {
         const headers = this.getHeaders()
         axios.get('http://127.0.0.1:8000/api/users', {'headers': headers})
@@ -63,7 +114,7 @@ class App extends React.Component {
 
     getUserNames(username) {
         const headers = this.getHeaders()
-        axios.get('http://127.0.0.1:8000/api/users', {'headers': headers, params:{'username': username}})
+        axios.get('http://127.0.0.1:8000/api/users', {'headers': headers, params: {'username': username}})
             .then(response => {
                 const username = response.data.results
                 localStorage.setItem('loggedUser', (username[0].first_name + " " + username[0].last_name))
@@ -138,11 +189,18 @@ class App extends React.Component {
                     </nav>
                     <Switch>
                         <Route path='/' exact component={() => <UsersList users={this.state.users}/>}/>
-                        <Route path='/projects' exact component={() => <ProjectsList projects={this.state.projects}/>}/>
+                        <Route path='/projects' exact
+                               component={() => <ProjectsList projects={this.state.projects} users={this.state.users}
+                                                              createProject={(name, users) => this.createProject(name, users)}
+                                                              deleteProject={(id) => this.deleteProject(id)}
+                                                              filter={(filter) => this.filterProjects(filter)}/>}/>
                         <Route exact path='/login' component={() => <LoginForm
                             getToken={(username, password) => this.getToken(username, password)}/>}/>
                         <Redirect from='/users' to='/'/>
-                        <Route path='/project/:id' component={() => <TodoList todos={this.state.todos}/>}/>
+                        <Route path='/project/:id' component={() => <TodoList todos={this.state.todos}
+                                                                              users={this.state.users}
+                                                                              deleteTodo={(id) => this.deleteTodo(id)}
+                                                                              createTodo={(name, user, project) => this.createTodo(name, user, project)}/>}/>
                         <Route component={NotFound404}/>
                     </Switch>
                 </BrowserRouter>
