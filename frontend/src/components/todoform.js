@@ -4,8 +4,7 @@ import React from 'react'
 class TodoForm extends React.Component {
     constructor(props) {
         super(props)
-        const defaultUser = props.users[0].pk
-        this.state = {name: '', user: defaultUser}
+        this.state = {name: '', user: localStorage.getItem('loggedUserId')}
     }
 
     handleChange(event) {
@@ -34,6 +33,7 @@ class TodoForm extends React.Component {
                     <label for="user">user</label>
 
                     <select name="user" className='form-control' onChange={(event) => this.handleChange(event)}>
+                        <option value={localStorage.getItem('loggedUserId')} selected>{localStorage.getItem('loggedUser')}</option>
                         {this.props.users.map((item) => <option value={item.pk}>{item.first_name + ' ' + item.last_name}</option>)}
                     </select>
                 </div>

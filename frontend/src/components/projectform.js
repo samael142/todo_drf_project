@@ -1,4 +1,5 @@
 import React from 'react'
+import Select from "react-select";
 
 
 class ProjectForm extends React.Component {
@@ -52,6 +53,7 @@ class ProjectForm extends React.Component {
                         {this.props.users.map((user) => <option value={user.pk}>{user.first_name} {user.last_name} </option>)}
                     </select>
                 </div>
+
                 <br/>
                 <input type="submit" className="btn btn-primary" value="Save"/>
             </form>

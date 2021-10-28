@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import ProjectForm from "./projectform";
 import ProjectFilterForm from "./projectfilterform";
+import Select, {components} from 'react-select'
 
 
 const ProjectItem = ({project, deleteProject}) => {
@@ -25,6 +26,25 @@ const ProjectItem = ({project, deleteProject}) => {
     )
 }
 
+// const MultiValueRemove = (props) => {
+//     if (props.data.isFixed) {
+//         return null;
+//     }
+//     return <components.MultiValueRemove {...props} />;
+// };
+//
+// const options = [
+//         {value: 'chocolate', label: 'Chocolate', isFixed: true},
+//         {value: 'strawberry', label: 'Strawberry'},
+//         {value: 'vanilla', label: 'Vanilla'}
+//     ]
+//
+// const MyComponent = () => (
+//     <Select isMulti options={options} defaultValue={[options[0]]} isClearable={false}
+//             components={{MultiValueRemove}}/>
+// )
+
+
 const ProjectsList = ({projects, users, createProject, deleteProject, filter}) => {
     return (
         <div>
@@ -42,7 +62,7 @@ const ProjectsList = ({projects, users, createProject, deleteProject, filter}) =
                     <th>
                         Users
                     </th>
-                    <th> </th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -50,6 +70,7 @@ const ProjectsList = ({projects, users, createProject, deleteProject, filter}) =
                 </tbody>
             </table>
             <ProjectForm createProject={createProject} users={users}/>
+            {/*<MyComponent/>*/}
         </div>
     )
 }

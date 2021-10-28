@@ -1,10 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import {useParams} from "react-router-dom";
 import TodoForm from "./todoform";
 
 const TodoItem = ({todo, deleteTodo}) => {
     return (
-        <tr>
+        <tr key={todo.id}>
             <td>{todo.name}</td>
             <td>{todo.user.first_name + ' ' + todo.user.last_name}</td>
             <td>{todo.project}</td>
@@ -19,7 +19,7 @@ const TodoItem = ({todo, deleteTodo}) => {
     )
 }
 
-const TodoList = ({todos, deleteTodo, createTodo, users}) => {
+const TodoList = ({todos, deleteTodo, createTodo, users, editTodo}) => {
     let {id} = useParams()
     let filtered_todos = todos.filter((todo) => todo.project === +id)
     return (
@@ -32,7 +32,7 @@ const TodoList = ({todos, deleteTodo, createTodo, users}) => {
                     <th>Project</th>
                     <th>Created</th>
                     <th>Is Active</th>
-                    <th> </th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>

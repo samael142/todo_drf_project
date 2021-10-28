@@ -25,9 +25,20 @@ class App extends React.Component {
             'users': [],
             'todos': [],
             'token': '',
-            'errorMessage': ''
+            'errorMessage': '',
         }
     }
+
+    // testMethod(projectId) {
+    //     const headers = this.getHeaders()
+    //     axios.get('http://127.0.0.1:8000/api/todos', {'headers': headers, params: {'project': projectId}})
+    //         .then(response => {
+    //             const xxx = response.data.results
+    //             this.setState({
+    //                 test: xxx
+    //             })
+    //         }).catch(error => console.log(error))
+    // }
 
     filterProjects(filter) {
         const headers = this.getHeaders()
@@ -117,6 +128,7 @@ class App extends React.Component {
         axios.get('http://127.0.0.1:8000/api/users', {'headers': headers, params: {'username': username}})
             .then(response => {
                 const username = response.data.results
+                localStorage.setItem('loggedUserId', username[0].pk)
                 localStorage.setItem('loggedUser', (username[0].first_name + " " + username[0].last_name))
             }).catch(error => console.log(error))
     }
@@ -197,7 +209,7 @@ class App extends React.Component {
                         <Route exact path='/login' component={() => <LoginForm
                             getToken={(username, password) => this.getToken(username, password)}/>}/>
                         <Redirect from='/users' to='/'/>
-                        <Route path='/project/:id' component={() => <TodoList todos={this.state.todos}
+                        <Route path='/project/:id' component={() => <TodoList key='todolist' todos={this.state.todos}
                                                                               users={this.state.users}
                                                                               deleteTodo={(id) => this.deleteTodo(id)}
                                                                               createTodo={(name, user, project) => this.createTodo(name, user, project)}/>}/>
